@@ -40,11 +40,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.jdye64</groupId>
-            <artifactId>nifi-salesforce-api</artifactId>
-            <version>${nifi.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20160212</version>
