@@ -37,7 +37,7 @@ import org.apache.nifi.processor.Relationship;
 import org.apache.nifi.processor.exception.ProcessException;
 import org.apache.nifi.processor.io.OutputStreamCallback;
 
-import com.jeremydyer.nifi.salesforce.SalesforceUserPassAuthentication;
+import com.jeremydyer.processors.salesforce.SalesforceUserPassAuthentication;
 import com.jeremydyer.processors.salesforce.base.AbstractSalesforceRESTOperation;
 
 @Tags({"salesforce", "describe", "metadata", "basic", "info"})

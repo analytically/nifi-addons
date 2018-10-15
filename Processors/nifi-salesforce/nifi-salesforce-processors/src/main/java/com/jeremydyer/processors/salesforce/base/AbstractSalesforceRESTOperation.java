@@ -32,7 +32,7 @@ import org.apache.nifi.processor.ProcessSession;
 import org.apache.nifi.processor.Relationship;
 import org.apache.nifi.processor.exception.ProcessException;
 
-import com.jeremydyer.nifi.salesforce.SalesforceUserPassAuthentication;
+import com.jeremydyer.processors.salesforce.SalesforceUserPassAuthentication;
 
 /**
  * Created by jdyer on 8/4/16.

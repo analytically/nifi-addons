@@ -28,10 +28,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>nifi-salesforce-api</module>
-        <module>nifi-salesforce-api-nar</module>
-        <module>nifi-salesforce-controllerservice</module>
-        <module>nifi-salesforce-controllerservice-nar</module>
         <module>nifi-salesforce-processors</module>
         <module>nifi-salesforce-nar</module>
     </modules>
