@@ -28,6 +28,7 @@ import java.util.Set;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.components.PropertyDescriptor;
+import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.processor.ProcessContext;
 import org.apache.nifi.processor.ProcessSession;
@@ -53,7 +54,7 @@ public class SalesforceQueryProcessor
             .Builder().name("SOQL Query")
             .description("Salesforce.com SOQL that will be perform on the Salesforce.com instance.")
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .required(true)
             .build();
 
@@ -107,7 +108,7 @@ public class SalesforceQueryProcessor
             });
             session.transfer(ff, REL_SUCCESS);
         } catch (Exception ex) {
-            getLogger().error(ex.getMessage());
+            getLogger().error(ex.getMessage(), ex);
             session.transfer(flowFile, REL_FAILURE);
         }
     }

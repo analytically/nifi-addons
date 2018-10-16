@@ -18,6 +18,7 @@ package com.jeremydyer.processors.salesforce;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.nifi.components.PropertyDescriptor;
+import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.processor.*;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
@@ -43,7 +44,7 @@ public class GenerateSOQL extends AbstractProcessor {
             .Builder().name("Salesforce.com Server Instance")
             .description("Your Salesforce.com server instance for using the REST API")
             .required(true)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .defaultValue("https://cs20.salesforce.com")
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
             .build();
@@ -54,7 +55,7 @@ public class GenerateSOQL extends AbstractProcessor {
                     " this process was ran. This value is used to get all Salesforce.com activity that has happened since" +
                     " the last time the ingestion was ran"))
             .required(true)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .defaultValue("2016-03-21T20:00:06.000Z")
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
             .build();

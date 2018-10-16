@@ -29,6 +29,7 @@ import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.SeeAlso;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.components.PropertyDescriptor;
+import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.processor.ProcessContext;
 import org.apache.nifi.processor.ProcessSession;
@@ -56,7 +57,7 @@ public class SObjectGetDeletedProcessor
             .Builder().name("SObject that will be interrogated for deleted records")
             .description("Salesforce SObject name that we are looking for deleted objects for.")
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .required(true)
             .build();
 
@@ -64,14 +65,15 @@ public class SObjectGetDeletedProcessor
             .Builder().name("SObject deleted start date")
             .description("ISO 8601 formatted start date for looking for deleted records.")
             .required(true)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
+
             .build();
 
     public static final PropertyDescriptor END_DATE = new PropertyDescriptor
             .Builder().name("SObject deleted end date")
             .description("ISO 8601 formatted end date for looking for deleted records.")
             .required(true)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .build();
 
     private List<PropertyDescriptor> descriptors;

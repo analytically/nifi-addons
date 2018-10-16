@@ -28,6 +28,7 @@ import java.util.Set;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.components.PropertyDescriptor;
+import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.processor.ProcessContext;
 import org.apache.nifi.processor.ProcessSession;
@@ -52,7 +53,7 @@ public class SObjectRowsProcessor
             .Builder().name("SObject that will be interrogated for deleted records")
             .description("Salesforce SObject name that we are looking for deleted objects for.")
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .required(true)
             .build();
 
@@ -60,7 +61,7 @@ public class SObjectRowsProcessor
             .Builder().name("SObject row id")
             .description("SObject row id for the SObject row that this processor will interact with")
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .required(true)
             .build();
 
@@ -119,7 +120,7 @@ public class SObjectRowsProcessor
             });
             session.transfer(ff, REL_SUCCESS);
         } catch (Exception ex) {
-            getLogger().error(ex.getMessage());
+            getLogger().error(ex.getMessage(), ex);
             session.transfer(flowFile, REL_FAILURE);
         }
     }

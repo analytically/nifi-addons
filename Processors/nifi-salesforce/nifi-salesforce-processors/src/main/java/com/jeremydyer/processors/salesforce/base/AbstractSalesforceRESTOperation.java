@@ -95,10 +95,7 @@ public class AbstractSalesforceRESTOperation
         }
         in.close();
 
-        //print result
-        getLogger().info(response.toString());
         return response.toString();
-
     }
 
     // HTTP POST request
@@ -138,8 +135,6 @@ public class AbstractSalesforceRESTOperation
         }
         in.close();
 
-        //print result
-        System.out.println(response.toString());
         return response.toString();
     }
 
@@ -154,7 +149,7 @@ public class AbstractSalesforceRESTOperation
         try {
             return URLEncoder.encode(url.toString(), "UTF-8");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            getLogger().error(ex.getMessage(), ex);
         }
         return null;
     }

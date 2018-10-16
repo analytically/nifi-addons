@@ -35,6 +35,7 @@ import org.apache.nifi.annotation.lifecycle.OnEnabled;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.controller.AbstractControllerService;
 import org.apache.nifi.controller.ConfigurationContext;
+import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.processor.exception.ProcessException;
 import org.apache.nifi.processor.util.StandardValidators;
 import org.apache.nifi.reporting.InitializationException;
@@ -57,7 +58,7 @@ public class SalesforceUserPassAuthenticationService
             .description("The URL for the authentication endpoint for Salesforce.com")
             .required(true)
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .defaultValue("https://test.salesforce.com/services/oauth2/token")
             .build();
 
@@ -65,7 +66,7 @@ public class SalesforceUserPassAuthenticationService
             .Builder().name("Salesforce.com ClientID")
             .description("The 'Consumer Key' from the connected app definition.")
             .required(true)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
             .build();
 
@@ -74,7 +75,7 @@ public class SalesforceUserPassAuthenticationService
             .description("The 'Consumer Secret' from the connected app definition.")
             .required(true)
             .sensitive(true)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
             .build();
 
@@ -82,7 +83,7 @@ public class SalesforceUserPassAuthenticationService
             .Builder().name("Salesforce.com Username")
             .description("End-user's username.")
             .required(true)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
             .build();
 
@@ -91,7 +92,7 @@ public class SalesforceUserPassAuthenticationService
             .description("End-user's password.")
             .required(true)
             .sensitive(true)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
             .build();
 
