@@ -89,7 +89,7 @@ public class SObjectDescribeProcessor
 
         try {
 
-            final String responseJson = sendGet(sfAuthService.getSalesforceAccessToken(), RESPONSE_JSON, generateSalesforceURL(SALESFORCE_OP));
+            final String responseJson = sendGet(sfAuthService.getSalesforceAccessToken(), generateSalesforceURL(SALESFORCE_OP));
 
             FlowFile ff = session.write(flowFile, new OutputStreamCallback() {
                 @Override

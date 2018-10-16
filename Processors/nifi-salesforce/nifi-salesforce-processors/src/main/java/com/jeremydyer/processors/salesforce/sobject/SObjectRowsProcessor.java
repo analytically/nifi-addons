@@ -110,7 +110,7 @@ public class SObjectRowsProcessor
                     + context.getProperty(SOBJECT_ROW_ID).evaluateAttributeExpressions().getValue();
 
 
-            final String responseJson = sendGet(sfAuthService.getSalesforceAccessToken(), RESPONSE_JSON, generateSalesforceURL(endpoint));
+            final String responseJson = sendGet(sfAuthService.getSalesforceAccessToken(), generateSalesforceURL(endpoint));
 
             FlowFile ff = session.write(flowFile, new OutputStreamCallback() {
                 @Override

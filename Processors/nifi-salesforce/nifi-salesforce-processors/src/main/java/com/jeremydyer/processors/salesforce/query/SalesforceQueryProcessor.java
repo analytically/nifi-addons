@@ -19,6 +19,7 @@ package com.jeremydyer.processors.salesforce.query;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -44,7 +45,7 @@ import com.jeremydyer.processors.salesforce.base.AbstractSalesforceRESTOperation
 @Tags({"salesforce", "soql", "sobject", "query"})
 @CapabilityDescription("Executes the specified SOQL query")
 public class SalesforceQueryProcessor
-    extends AbstractSalesforceRESTOperation {
+        extends AbstractSalesforceRESTOperation {
 
     //https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_query.htm
 
@@ -88,7 +89,7 @@ public class SalesforceQueryProcessor
     @Override
     public void onTrigger(final ProcessContext context, final ProcessSession session) throws ProcessException {
         final FlowFile flowFile = session.get();
-        if ( flowFile == null ) {
+        if (flowFile == null) {
             return;
         }
 
@@ -96,16 +97,9 @@ public class SalesforceQueryProcessor
                 .asControllerService(SalesforceUserPassAuthentication.class);
 
         try {
-
-            String endpoint = SALESFORCE_OP + "/?q=" + context.getProperty(SOQL).evaluateAttributeExpressions().getValue();
-            final String responseJson = sendGet(sfAuthService.getSalesforceAccessToken(), RESPONSE_JSON, generateSalesforceURL(endpoint));
-
-            FlowFile ff = session.write(flowFile, new OutputStreamCallback() {
-                @Override
-                public void process(OutputStream outputStream) throws IOException {
-                    outputStream.write(responseJson.getBytes());
-                }
-            });
+            String endpoint = SALESFORCE_OP + "/?q=" + URLEncoder.encode(context.getProperty(SOQL).evaluateAttributeExpressions().getValue(), "UTF-8");
+            String responseJson = sendGet(sfAuthService.getSalesforceAccessToken(), generateSalesforceURL(endpoint));
+            FlowFile ff = session.write(flowFile, outputStream -> outputStream.write(responseJson.getBytes()));
             session.transfer(ff, REL_SUCCESS);
         } catch (Exception ex) {
             getLogger().error(ex.getMessage(), ex);

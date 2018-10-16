@@ -71,7 +71,7 @@ public class GeneratePhoenixCreateTable extends AbstractProcessor {
                 String jsonString = IOUtils.toString(inputStream);
                 JSONArray fields = new JSONArray(jsonString);
 
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                 buffer.append("CREATE TABLE ");
                 buffer.append("SALESFORCE.");
                 buffer.append(flowFile.getAttribute("sobject_name"));

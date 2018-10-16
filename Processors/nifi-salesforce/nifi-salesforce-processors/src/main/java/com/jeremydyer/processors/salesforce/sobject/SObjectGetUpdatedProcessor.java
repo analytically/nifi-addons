@@ -119,7 +119,7 @@ public class SObjectGetUpdatedProcessor
                     + context.getProperty(START_DATE).evaluateAttributeExpressions().getValue() + "&end=" + context.getProperty(END_DATE).evaluateAttributeExpressions().getValue();
 
 
-            final String responseJson = sendGet(sfAuthService.getSalesforceAccessToken(), RESPONSE_JSON, generateSalesforceURL(endpoint));
+            final String responseJson = sendGet(sfAuthService.getSalesforceAccessToken(), generateSalesforceURL(endpoint));
 
             FlowFile ff = session.write(flowFile, new OutputStreamCallback() {
                 @Override

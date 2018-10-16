@@ -49,7 +49,6 @@ public class SalesforceUserPassAuthenticationService
     //Salesforce.com Documentation around this authentication flow
     //https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_understanding_username_password_oauth_flow.htm
 
-    private final String GRANT_TYPE = "password";
     private String accessToken = null;
 
     //TODO: create a custom validator. Make sure the user is entering a URL and it is using HTTPS which is required by Salesforce.
@@ -121,9 +120,9 @@ public class SalesforceUserPassAuthenticationService
      */
     @OnEnabled
     public void onEnabled(final ConfigurationContext context) throws InitializationException {
-
         StringBuilder requestBody = new StringBuilder();
         requestBody.append("grant_type=");
+        String GRANT_TYPE = "password";
         requestBody.append(GRANT_TYPE);
         requestBody.append("&client_id=");
         requestBody.append(context.getProperty(CLIENT_ID).evaluateAttributeExpressions().getValue());
@@ -139,8 +138,6 @@ public class SalesforceUserPassAuthenticationService
 
         requestBody.append("&password=");
         requestBody.append(context.getProperty(PASSWORD).evaluateAttributeExpressions().getValue());
-        //requestBody.append(context.getProperty(USER_SECURITY_TOKEN).evaluateAttributeExpressions().getValue());
-
 
         try {
             URL obj = new URL(context.getProperty(AUTH_ENDPOINT).evaluateAttributeExpressions().getValue());
@@ -165,15 +162,13 @@ public class SalesforceUserPassAuthenticationService
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             in.close();
 
-            //print result
-            System.out.println(response.toString());
             getLogger().info("Salesforce.com Auth Response: " + response.toString());
 
             //Parse the response and attempt to get the Salesforce.com access_token
